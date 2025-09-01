@@ -61,9 +61,9 @@ export const usePowerManagementData = (
         // Map over the data to calculate and add the power factor
         const processedData = rawData.map((item: PowerDataItem) => {
           const avgVoltage =
-            (item.Voltage_A_B_Value +
-              item.Voltage_B_C_Value +
-              item.Voltage_A_C_Value) /
+            (item.Voltage_A_B_VALUE +
+              item.Voltage_B_C_VALUE +
+              item.Voltage_C_A_VALUE) /
             3;
           const avgCurrent =
             (item.Current_Phase_A_VALUE +

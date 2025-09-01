@@ -1,46 +1,43 @@
-import React from 'react';
+// src/components/DrillControls.tsx
 
-// Define the types for the props the component will receive
+import React from "react";
+
+// 💡 Define the new granularity options
+export type Granularity = "today" | "daily" | "weekly" | "monthly";
+
 type DrillControlsProps = {
-  granularity: 'live' | 'day' | 'month';
-  setGranularity: (value: 'live' | 'day' | 'month') => void;
+  granularity: Granularity;
+  setGranularity: (value: Granularity) => void;
 };
 
-export default function DrillControls({ granularity, setGranularity }: DrillControlsProps) {
-  // No local state needed here anymore
-  
+// 💡 Define the button labels and keys
+const options: { key: Granularity; label: string }[] = [
+  { key: "today", label: "Today" },
+  { key: "daily", label: "Daily" },
+  { key: "weekly", label: "Weekly" },
+  { key: "monthly", label: "Monthly" },
+];
+
+export default function DrillControls({
+  granularity,
+  setGranularity,
+}: DrillControlsProps) {
   return (
-    <div className="flex justify-end space-x-2 mb-4">
-      <button
-        onClick={() => setGranularity('live')}
-        className={`px-4 py-2 text-sm font-medium rounded-md ${
-          granularity === 'live'
-            ? 'bg-blue-500 text-white'
-            : 'bg-gray-200 text-gray-700'
-        }`}
-      >
-        Live
-      </button>
-      <button
-        onClick={() => setGranularity('day')}
-        className={`px-4 py-2 text-sm font-medium rounded-md ${
-          granularity === 'day'
-            ? 'bg-blue-500 text-white'
-            : 'bg-gray-200 text-gray-700'
-        }`}
-      >
-        Per Day
-      </button>
-      <button
-        onClick={() => setGranularity('month')}
-        className={`px-4 py-2 text-sm font-medium rounded-md ${
-          granularity === 'month'
-            ? 'bg-blue-500 text-white'
-            : 'bg-gray-200 text-gray-700'
-        }`}
-      >
-        Per Month
-      </button>
+    <div className="flex items-center space-x-2">
+      <span className="text-sm font-medium text-gray-600">Aggregate:</span>
+      {options.map((option) => (
+        <button
+          key={option.key}
+          onClick={() => setGranularity(option.key)}
+          className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+            granularity === option.key
+              ? "bg-blue-500 text-white shadow-sm"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          }`}
+        >
+          {option.label}
+        </button>
+      ))}
     </div>
   );
 }
